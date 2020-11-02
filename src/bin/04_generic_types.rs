@@ -22,4 +22,6 @@
 // Exercise: use the previous function, print the result after using the `?` operator
 // from the `main` function. It means that we'll need to update the `main` function's prototype!
 
+// Exercise: use the previous function, and print an error message if the function fails.
+
 fn main() {}
