@@ -1,18 +1,20 @@
-mod vending_machine;
+use std::fs::read_dir;
 
-use std::io::{self, BufRead};
-use vending_machine::VendingMachine;
+fn main() -> Result<(), ()> {
+    let r = read_dir("./src/bin").expect("Couldn't find ./src/bin directory");
+    r.into_iter().for_each(|e| {
+        println!("Usage: cargo run --bin <bin>");
+        println!("Available binaries:");
+        println!(
+            "$ cargo run --bin {}",
+            e.unwrap()
+                .file_name()
+                .into_string()
+                .unwrap()
+                .strip_suffix(".rs")
+                .unwrap()
+        );
+    });
 
-fn main() {
-    let machine = VendingMachine::new();
-    machine.display_instructions();
-
-    let stdin = io::stdin();
-    for line in stdin.lock().lines() {
-        let replaced_line = line.unwrap().trim().replace(", ", ",");
-        let tokens: Vec<&str> = replaced_line.split(",").collect();
-
-        machine.display_instructions();
-        println!("Here are your tokens, use them as you please: {:?}", tokens);
-    }
+    Ok(())
 }

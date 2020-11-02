@@ -1,3 +1,5 @@
+use std::io::{self, BufRead};
+
 pub enum Action<'a> {
     InsertMoney(f32),
     ReturnMoney,
@@ -61,7 +63,7 @@ impl VendingMachine<'_> {
     }
 
     pub fn _insert_money() {
-        // TODO: 
+        // TODO:
 
         unimplemented!()
     }
@@ -73,12 +75,24 @@ impl VendingMachine<'_> {
     }
 
     pub fn _select_item() {
-
         unimplemented!()
     }
 
     pub fn _service() {
-
         unimplemented!()
+    }
+}
+
+fn main() {
+    let machine = VendingMachine::new();
+    machine.display_instructions();
+
+    let stdin = io::stdin();
+    for line in stdin.lock().lines() {
+        let replaced_line = line.unwrap().trim().replace(", ", ",");
+        let tokens: Vec<&str> = replaced_line.split(",").collect();
+
+        machine.display_instructions();
+        println!("Here are your tokens, use them as you please: {:?}", tokens);
     }
 }
