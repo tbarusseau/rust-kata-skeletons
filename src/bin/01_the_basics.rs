@@ -25,6 +25,7 @@ fn multiply_by_pi(y: f64) -> f64 {
 }
 
 mod tests {
+    #[cfg(test)]
     use super::*;
     
     #[test]
