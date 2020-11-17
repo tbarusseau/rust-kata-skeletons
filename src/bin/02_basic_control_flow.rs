@@ -11,8 +11,32 @@
 // - If the number is neither divisible by 3 nor 5, print the number.
 // When it works, we'll create a FizzBuzzJazz function :D
 
-// fn fizzbuzz() {}
+fn fizzbuzz() {
+    for i in 0..100 {
+        if i % 3 == 0 && i % 5 == 0 {
+            println!("FizzBuzz");
+        } else if i % 3 == 0 {
+            println!("Fizz");
+        } else if i % 5 == 0 {
+            println!("Buzz");
+        } else {
+            println!("{}", i);
+        }
+    }
+}
+
+fn fizzbuzz_match() {
+    for i in 0..100 {
+        match (i % 3, i % 5) {
+            (0, 0) => println!("FizzBuzz"),
+            (0, _) => println!("Fizz"),
+            (_, 0) => println!("Buzz"),
+            _ => println!("{}", i),
+        }
+    }
+}
 
 fn main() {
-    // fizzbuzz();
+    fizzbuzz();
+    fizzbuzz_match();
 }
