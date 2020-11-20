@@ -24,4 +24,43 @@
 
 // Exercise: use the previous function, and print an error message if the function fails.
 
-fn main() {}
+struct Generic<T> {
+    item: T,
+}
+
+enum SeveralGenerics<T, U> {
+    Bag(Generic<T>),
+    Other(U)
+}
+
+fn remove_suffix(filename: &str) -> Result<String, String> {
+    let suffix = "- Copy";
+    if filename.ends_with(suffix) {
+        return Ok(filename.split(suffix).collect::<String>());
+    }
+    Err(String::from("Impossible de supprimer le suffixe : suffixe non trouvé"))
+}
+
+fn remove_suffix_autrement(filename: &str) -> Result<String, String> {
+    let suffix = "- Copy";
+    if filename.ends_with(suffix) {
+        return Ok(filename.trim_end_matches(suffix).to_string());
+    }
+    Err(String::from("Impossible de supprimer le suffixe : suffixe non trouvé"))
+}
+
+fn main() -> Result<(), String> {
+    let success1 = remove_suffix("test - Copy")?;
+    let success2 = remove_suffix_autrement("test - Copy")?;
+
+    println!("{}", success1);
+    println!("{}", success2);
+
+    let failure1 = remove_suffix("test")?;
+    let failure2 = remove_suffix_autrement("test")?;
+
+    println!("{}", failure1);
+    println!("{}", failure2);
+
+    Ok(())
+}
