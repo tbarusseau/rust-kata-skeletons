@@ -7,15 +7,13 @@ fn main() -> Result<(), ()> {
     println!("Available binaries:");
 
     r.into_iter().for_each(|e| {
-        println!(
-            "$ cargo run --bin {}",
-            e.unwrap()
-                .file_name()
-                .into_string()
-                .unwrap()
-                .strip_suffix(".rs")
-                .unwrap()
-        );
+        let s = e.unwrap().file_name().into_string().unwrap();
+        let s = match s.ends_with(".rs") {
+            true => s.strip_suffix(".rs").unwrap().to_string(),
+            _ => s,
+        };
+
+        println!("cargo run --bin {}", s);
     });
 
     Ok(())
