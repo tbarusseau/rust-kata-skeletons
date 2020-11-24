@@ -45,5 +45,7 @@ fn remove_copy(filename: String) -> Result<String, String> {
 fn main() -> Result<(), String> {
     let result = remove_copy("Mon fichier - Copy".to_string())?;
 
+    println!("{}", result);
+
     Ok(())
 }
