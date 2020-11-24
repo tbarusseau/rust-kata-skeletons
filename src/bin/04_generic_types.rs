@@ -24,4 +24,49 @@
 
 // Exercise: use the previous function, and print an error message if the function fails.
 
-fn main() {}
+use regex::Regex;
+
+struct _Bag<T> {
+    content: T,
+}
+
+enum _BagOrOther<T, U> {
+    Bag(_Bag<T>),
+    Other(U),
+}
+
+fn dot_txt_remover(file_name: &str)-> Result<String, String> {
+    if file_name.contains(".txt") {
+        let reg = Regex::new(r".txt$").unwrap();
+
+        Ok(reg.replace(file_name, "").to_string())
+    } else { 
+        Err("Not found".to_string()) 
+    }
+}
+
+fn main() {
+    let result: Result<String, String> = dot_txt_remover("myFile.txt");
+    match result {
+        Ok(splitted_file_name) => println!("file name without extension is : {}", splitted_file_name),
+        Err(e) => println!("an error occurs : {}", e),
+    }
+}
+
+mod tests {
+    #[cfg(test)]
+    use super::*;
+
+    #[test]
+    fn should_output_the_without_extenstion(){
+        assert_eq!(dot_txt_remover("myFile.txt").unwrap(), String::from("myFile"));
+        assert_eq!(dot_txt_remover("myFile.txt.txt").unwrap(), String::from("myFile.txt"));
+        assert_eq!(dot_txt_remover("myFile.txt.io").unwrap(), String::from("myFile.txt.io"));
+    }
+    #[test]
+    fn should_output_an_error(){
+        assert_eq!(dot_txt_remover("myFile.io"), Err("Not found".to_string()));
+        assert_eq!(dot_txt_remover("myFile"), Err("Not found".to_string()));
+        assert_eq!(dot_txt_remover("myFiletxt.something"), Err("Not found".to_string()));
+    }
+}

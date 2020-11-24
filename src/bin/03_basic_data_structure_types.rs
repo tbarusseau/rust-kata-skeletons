@@ -71,6 +71,5 @@ fn main() {
         context: String::from("some context causing the error"),
         status_code: 500,
     };
-
     [e0, e1, e2, e3].iter().for_each(|e| display_error(e));
 }
