@@ -33,10 +33,17 @@ struct Container<T> {
 // }
 
 fn remove_copy(filename: String) -> Result<String, String> {
-    Ok(filename.split("- Copy").collect());
-    Err(String::from("No '- Copy' found"));
+    if filename.ends_with("- Copy") {
+        Ok(filename.split("- Copy").collect())
+    }
+    else {
+        Err("No '- Copy' found".to_string())
+    }
+
 }
 
-fn main() {
-    remove_copy(String::from("Mon fichier - Copy"));
+fn main() -> Result<(), String> {
+    let result = remove_copy("Mon fichier - Copy".to_string())?;
+
+    Ok(())
 }
