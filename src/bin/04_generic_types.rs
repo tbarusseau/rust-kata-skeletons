@@ -23,5 +23,20 @@
 // from the `main` function. It means that we'll need to update the `main` function's prototype!
 
 // Exercise: use the previous function, and print an error message if the function fails.
+struct Container<T> {
+    item: T
+}
 
-fn main() {}
+// enum Cargo<T, S> {
+//     Place = Container(String),
+    
+// }
+
+fn remove_copy(filename: String) -> Result<String, String> {
+    Ok(filename.split("- Copy").collect());
+    Err(String::from("No '- Copy' found"));
+}
+
+fn main() {
+    remove_copy(String::from("Mon fichier - Copy"));
+}
