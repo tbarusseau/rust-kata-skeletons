@@ -33,14 +33,14 @@ fn suffix_remover_1(filename: &String) -> Result<String, String> {
     }
 }
 
-fn _suffix_remover_2(filename: String) -> Result<String, ()> {
+fn _suffix_remover_2(filename: &String) -> Result<String, ()> {
     match filename.strip_suffix(SUFFIX) {
         Some(s) => Ok(s.to_string()),
         None => Err(()),
     }
 }
 
-fn _suffix_remover_3(filename: String) -> Result<String, ()> {
+fn _suffix_remover_3(filename: &String) -> Result<String, ()> {
     if filename.ends_with(SUFFIX) {
         let len = filename.chars().count();
         Ok(filename.chars().take(len - SUFFIX.len()).collect())
@@ -50,7 +50,7 @@ fn _suffix_remover_3(filename: String) -> Result<String, ()> {
     }
 }
 
-fn _suffix_remover_4(filename: String) -> Result<String, ()> {
+fn _suffix_remover_4(filename: &String) -> Result<String, ()> {
     if filename.ends_with(SUFFIX) {
         let len = filename.chars().count();
         Ok(filename[..len - SUFFIX.len()].to_string())
@@ -60,11 +60,16 @@ fn _suffix_remover_4(filename: String) -> Result<String, ()> {
     }
 }
 
-// #[test]
-// fn test_suffix_remover() {
-//     const input: &str = "test- Copy";
-//     const output: &str = "test";
-// }
+#[test]
+fn test_suffix_remover() {
+    let input = "test- Copy".to_string();
+    let output = "test".to_string();
+
+    assert_eq!(suffix_remover_1(&input).unwrap(), output);
+    assert_eq!(_suffix_remover_2(&input).unwrap(), output);
+    assert_eq!(_suffix_remover_3(&input).unwrap(), output);
+    assert_eq!(_suffix_remover_4(&input).unwrap(), output);
+}
 
 // Exercise: use the previous function, and print the result after being unwrapped!
 
