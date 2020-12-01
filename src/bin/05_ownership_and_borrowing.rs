@@ -13,19 +13,24 @@
 
 // Exercise: create a struct that contains at least one reference
 
-fn increment(a: i32) -> i32 {
-    unimplemented!()
+fn increment(a: &mut i32) {
+    *a += 1;
 }
 
-fn suffix(s: String) -> String {
-    unimplemented!()
+fn suffix(s: &mut String, f: &str) {
+    s.push_str(&f);
 }
 
 fn main() {
-    let a = 0;
-    increment(a);
+    let mut a = 0;
+    increment(&mut a);
+    println!("{}", a);
+    
+    let mut s = "theTribe".to_string();
+    suffix(&mut s, " toto");
+    println!("{}", s);
 
-    // let s = "theTribe".to_string();
-    // suffix(s);
-    // println!("{}", s);
+    let mut s = "hello".to_string();
+    suffix(&mut s, " rust world");
+    println!("{}", s);
 }
