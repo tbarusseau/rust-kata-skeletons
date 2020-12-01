@@ -13,19 +13,39 @@
 
 // Exercise: create a struct that contains at least one reference
 
-fn increment(a: i32) -> i32 {
-    unimplemented!()
+fn increment(a: &mut i32) {
+    *a += 1;
 }
 
-fn suffix(s: String) -> String {
-    unimplemented!()
+fn suffix(s: &mut String) {
+    s.push_str("-suffix");
 }
 
 fn main() {
-    let a = 0;
-    increment(a);
+    let mut a = 0;
+    increment(&mut a);
+    println!("{}", a);
 
-    // let s = "theTribe".to_string();
-    // suffix(s);
-    // println!("{}", s);
+    let mut s = "theTribe".to_string();
+    suffix(&mut s);
+    println!("{}", s);
+
+    { let _drop_me = 128; }
+    let drop_me_too = 42;
+    std::mem::drop(drop_me_too);
+
+    // println!("{}", _drop_me);
+    println!("{}", drop_me_too);
+
+    let drop_me_for_real_this_time = String::new();
+    std::mem::drop(drop_me_for_real_this_time);
+    // println!("{}", drop_me_for_real_this_time);
+
+    let ref_holder: HoldsARef<str> = HoldsARef {
+        my_ref: "toto",
+    };
+}
+
+struct HoldsARef<'a, T: ?Sized> {
+    my_ref: &'a T,
 }
